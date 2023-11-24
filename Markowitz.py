@@ -7,6 +7,10 @@ import plotly.graph_objects as go
 import yfinance as yf
 
 def stoch(ticker : str):
+
+    low = 20
+    high = 80
+
     try:
         df = yf.Ticker(ticker)
         df = df.history(period='6mo')[['Open', 'High', 'Low', 'Close']]
@@ -75,8 +79,17 @@ def stoch(ticker : str):
         title=ticker,
         title_font_size=40
     )
+
     fig.update_layout(layout)
     fig.show()
+
+    slow = df.tail(1)['stochd_14_3_3'][0]
+    fast = df.tail(1)['stochk_14_3_3'][0]
+
+    if slow > fast and fast > high:
+        print(f"{ticker} - Sell")
+    elif fast > slow and fast < low:
+        print(f"{ticker} - Buy")
 
 def build_portfolio(tickers_list: list) -> markowitzify.portfolio:
     key = os.environ.get('API_Key')
