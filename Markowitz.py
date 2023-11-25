@@ -21,7 +21,7 @@ def stoch(ticker : str):
         return
 
     fig = make_subplots(rows=2, cols=1)
-    fig
+    
     fig.append_trace(
         go.Candlestick(
             x=df.index,
@@ -110,7 +110,7 @@ def main():
         print("No Portfolio file found")
         response = "no"
     
-    if response == 'no':
+    if response == "no":
         try:
             print("Please input the tickers of potential investments:")
             tickers = input().strip().split()
